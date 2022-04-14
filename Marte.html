@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Tu peso en otro planeta
+        </title>
+    </head>
+    <body>
+        <h1>Tu peso en otro planeta</h1>
+        <p>En la tierra pesas distinto que en marte o jupiter</p>
+        <script type="text/javascript">
+            
+            // Define variables
+            var dblPeso = parseFloat(prompt("Cual es tu peso?"));
+            var intPlaneta = parseInt(prompt("Que planeta quieres \n 1 para marte 2 para jupiter?"));
+            var dblGTierra = 9.8;
+            var dblGMarte = 3.7;
+            var dblGJupiter = 24.8;
+            var strPlaneta;
+            //var dblPeso = 77;
+            //dblPeso = parseFloat(dblUsuario);
+            //dblPeso = parseFloat(dblPeso);
+            var dblPesoFinal;
+            
+            if (intPlaneta == 1) {
+                dblPesoFinal = (dblPeso * dblGMarte) / dblGTierra;
+                strPlaneta = "Marte";
+            }
+            else if (intPlaneta == 2) {
+                dblPesoFinal = (dblPeso * dblGJupiter) / dblGTierra;
+                strPlaneta = "Jupiter";
+            }
+            else {
+                alert("Error! solo puede elegir planeta entre 1 o 2");
+            }
+            
+            //dblPesoFinal = parseInt(dblPesoFinal);
+            dblPesoFinal = (dblPesoFinal.toFixed(2));
+            document.write("Tu peso en <strong>"+strPlaneta+"</strong> en kilos es " + dblPesoFinal);
+        </script>
+    <body>
+</html>
