@@ -12,80 +12,47 @@ var objTeclas = {
 	DERECHA: 39,
 	NUEVO: 78
 };
-var intMovimiento = 5;
+var intMovimiento = 3;
 
 // Agrega eventos
 document.addEventListener("keyup",presionarTeclado); // dibujar por Teclado
 objCanvas.addEventListener("mousedown", presionarMouse); // Cuando se presiona el raton
-objCanvas.addEventListener("mouseup", soltarMouse); // Cuando se suelta el raton
 
 // Define funciones
 function presionarMouse(evento) {
-	console.log(evento);
-	console.log(evento.offsetX);
-	console.log(evento.offsetY);	
-	//console.log(intxInicial.toString() + intyInicial.toString() + intxFinal.toString() + intyFinal.toString());
-	//dibujarLinea("red",evento.offsetX, evento.offsetY, evento.offsetX+intMovimiento, evento.offsetY+intMovimiento)
+	// Busca las coordenadas del raton para realizar el dibujo
 	var strColorMouse = "red";
 	intxInicial = evento.offsetX;
 	intyInicial = evento.offsetY;
+	
 	intxFinal = intxInicial + intMovimiento;
-	intyFinal = intyInicial = intMovimiento;
-	dibujarForma(strColorMouse);
-}
-
-function soltarMouse(evento) {
-	console.log(evento.offsetX);
-	console.log(evento.offsetY);	
-
-	// var strColorMouse = "red";
-	// dibujarLinea(strColorMouse,evento.offsetX, evento.offsetY, evento.offsetX+intMovimiento, evento.offsetY+intMovimiento)
-	
-	
-	// intxFinal = evento.offsetX;
-	// intyFinal = evento.offsety;
-	
-	// dibujarForma(strColorMouse);
-	
-	var strColorMouse = "red";
-	intxInicial = evento.offsetX;
-	intyInicial = evento.offsetY;
-	intxFinal = intxInicial + intMovimiento;
-	intyFinal = intyInicial = intMovimiento;
-	dibujarForma(strColorMouse);
-
-	//console.log(intxInicial.toString() + intyInicial.toString() + intxFinal.toString() + intyFinal.toString());
+	intyFinal = intyInicial + intMovimiento;
+	dibujarLinea(strColorMouse,intxInicial,intyInicial,intxFinal,intyFinal);
 }
 
 function presionarTeclado(evento) {
-	//console.log(evento.keyCode);
-	
 	var strColorTeclado = "blue";
 	
 	switch (evento.keyCode) {
 		case objTeclas.ARRIBA: // Flecha arriba	
 			intyFinal = intyFinal - intMovimiento;
-			dibujarForma(strColorTeclado);
+			dibujarLinea(strColorTeclado,intxInicial,intyInicial,intxFinal,intyFinal);
 			intyInicial = intyInicial - intMovimiento;
-			//console.log(intxInicial.toString() + intyInicial.toString() + intxFinal.toString() + intyFinal.toString());
 			break;						
 		case objTeclas.ABAJO: // Flecha abajo
 			intyFinal = intyFinal + intMovimiento;
-			dibujarForma(strColorTeclado);
+			dibujarLinea(strColorTeclado,intxInicial,intyInicial,intxFinal,intyFinal);
 			intyInicial = intyInicial + intMovimiento;
-			//console.log(intxInicial.toString() + intyInicial.toString() + intxFinal.toString() + intyFinal.toString());
 			break;	
 		case objTeclas.IZQUIERDA: // Flecha izquierda
 			intxFinal = intxFinal - intMovimiento;
-			dibujarForma(strColorTeclado);
+			dibujarLinea(strColorTeclado,intxInicial,intyInicial,intxFinal,intyFinal);
 			intxInicial = intxInicial - intMovimiento;
-			//console.log(intxInicial.toString() + intyInicial.toString() + intxFinal.toString() + intyFinal.toString());
 			break;
 		case objTeclas.DERECHA: // Flecha derecha
 			intxFinal = intxFinal + intMovimiento;
-			dibujarForma(strColorTeclado);
+			dibujarLinea(strColorTeclado,intxInicial,intyInicial,intxFinal,intyFinal);
 			intxInicial = intxInicial + intMovimiento;
-			//console.log(intxInicial.toString() + intyInicial.toString() + intxFinal.toString() + intyFinal.toString());
 			break;
 		case objTeclas.NUEVO: // Presiona n limpia el dibujo
 			objLienzo.clearRect(0, 0, objCanvas.width, objCanvas.height);
@@ -107,9 +74,3 @@ function dibujarLinea(color, xinicial, yinicial, xfinal, yfinal) {
 	objLienzo.stroke();
 	objLienzo.closePath();
 }
-
-function dibujarForma(strColor) {
-	dibujarLinea(strColor,intxInicial,intyInicial,intxFinal,intyFinal);
-}	
-
-
