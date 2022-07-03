@@ -1,32 +1,41 @@
 // Define variables
 var objCanvas = document.getElementById("dibujo");
 var objLienzo = objCanvas.getContext("2d");
-
-const objMapa = "tile.png";
-const objPersonaje1 = "cerdo.png";
-const objPersonaje2 = "pollo.png";
-const objPersonaje3 = "vaca.png";
 const intTamanoImagen = 80;
 const intMaximoMapa = 499;
 
-var objFondo = new Image();
-var objCerdo = new Image();
-var objPollo = new Image();
-var objVaca = new Image();
+// Crear objetos para los personajes
+var objPersonaje1 = {
+	url: "cerdo.png",
+	cargaOK: false
+};
+objPersonaje1.imagen = new Image();
+objPersonaje1.imagen.src = objPersonaje1.url;
+objPersonaje1.imagen.addEventListener("load", cargarCerdo);
 
-// Asigna las imagenes al objeto
-objFondo.src = objMapa;
-objCerdo.src = objPersonaje1;
-objPollo.src = objPersonaje2;
-objVaca.src = objPersonaje3;
+var objPersonaje2 = {
+	url: "pollo.png",
+	cargaOK: false
+};
+objPersonaje2.imagen = new Image();
+objPersonaje2.imagen.src = objPersonaje2.url;
+objPersonaje2.imagen.addEventListener("load", cargarPollo);
 
-// Agregamos eventos
-objFondo.addEventListener("load", dibujarMapa);
-objCerdo.addEventListener("load", dibujarCerdo);
-objPollo.addEventListener("load", dibujarPollo);
-objVaca.addEventListener("load", dibujarVaca);
+var objPersonaje3 = {
+	url: "vaca.png",
+	cargaOK: false
+};
+objPersonaje3.imagen = new Image();
+objPersonaje3.imagen.src = objPersonaje3.url;
+objPersonaje3.imagen.addEventListener("load", cargarVaca);
 
-// Define funciones
+var objMapa = {
+	url: "tile.png",
+	cargaOK: false
+};
+objMapa.imagen = new Image();
+objMapa.imagen.src = objMapa.url;
+objMapa.imagen.addEventListener("load", cargarMapa);
 
 // funcion para obtener numeros al azar entre rangos
 function numerosAleatoriosRango(numeroMinimo, numeroMaximo) {
@@ -36,36 +45,65 @@ function numerosAleatoriosRango(numeroMinimo, numeroMaximo) {
 }
 
 // funciones para cargar el mapa y los personajes
-function dibujarMapa() {
-	objLienzo.drawImage(objFondo,0,0);
+function dibujar() {
+	if(objMapa.cargaOK) {
+		objLienzo.drawImage(objMapa.imagen,0,0);
+
+		for (var i=0; i<=4; i++) {
+			dibujarCerdos();
+			dibujarPollos();
+			dibujarVacas();
+		}
+	}
 }
 
-function dibujarCerdo() {
-	var intPosicionX = posicionAzarImagen((objCanvas.width - objCanvas.width),objCanvas.width);
-	var intPosicionY = posicionAzarImagen((objCanvas.height - objCanvas.height),objCanvas.height);
-	objLienzo.drawImage(objCerdo, intPosicionX, intPosicionY);
-	//document.write(intPosicionX + " - " + intPosicionY + "<br />");
+function dibujarCerdos() {
+	var intPosicionX = posicionAzarImagen((objCanvas.width - objCanvas.width),(objCanvas.width-intTamanoImagen));
+	var intPosicionY = posicionAzarImagen((objCanvas.height - objCanvas.height),(objCanvas.height-intTamanoImagen));
+	objLienzo.drawImage(objPersonaje1.imagen, intPosicionX, intPosicionY);
 }
 
-function dibujarPollo() {
-	var intPosicionX = posicionAzarImagen((objCanvas.width - objCanvas.width),objCanvas.width);
-	var intPosicionY = posicionAzarImagen((objCanvas.height - objCanvas.height),objCanvas.height);
-	objLienzo.drawImage(objPollo, intPosicionX, intPosicionY);
-	//document.write(intPosicionX + " - " + intPosicionY + "<br />");
+function dibujarPollos() {
+	var intPosicionX = posicionAzarImagen((objCanvas.width - objCanvas.width),(objCanvas.width-intTamanoImagen));
+	var intPosicionY = posicionAzarImagen((objCanvas.height - objCanvas.height),(objCanvas.height-intTamanoImagen));
+	objLienzo.drawImage(objPersonaje2.imagen, intPosicionX, intPosicionY);
 }
 
-function dibujarVaca() {
-	var intPosicionX = posicionAzarImagen((objCanvas.width - objCanvas.width),objCanvas.width);
-	var intPosicionY = posicionAzarImagen((objCanvas.height - objCanvas.height),objCanvas.height);
-	objLienzo.drawImage(objVaca, intPosicionX, intPosicionY);
-	//document.write(intPosicionX + " - " + intPosicionY + "<br />");
+function dibujarVacas() {
+	var intPosicionX = posicionAzarImagen((objCanvas.width - objCanvas.width),(objCanvas.width-intTamanoImagen));
+	var intPosicionY = posicionAzarImagen((objCanvas.height - objCanvas.height),(objCanvas.height-intTamanoImagen));
+	objLienzo.drawImage(objPersonaje3.imagen, intPosicionX, intPosicionY);
 }
 
 function posicionAzarImagen(numeroMinimo, numeroMaximo) {
-	var intPosicion = numerosAleatoriosRango(numeroMinimo,numeroMaximo);
+	// var intPosicion = numerosAleatoriosRango(numeroMinimo,numeroMaximo);
+
+	var intPosicion = numerosAleatoriosRango(0,7);
+	intPosicion = intPosicion * (intTamanoImagen-20);
+
 	if ((intPosicion + intTamanoImagen) > intMaximoMapa) {
 		intPosicion = intPosicion - intTamanoImagen;
 	}
 	
 	return intPosicion;
+}
+
+function cargarCerdo() {
+	objPersonaje1.cargaOK = true;
+	dibujar();
+}
+
+function cargarPollo() {
+	objPersonaje2.cargaOK = true;
+	dibujar();
+}
+
+function cargarVaca() {
+	objPersonaje3.cargaOk = true;
+	dibujar();
+}
+
+function cargarMapa() {
+	objMapa.cargaOK = true;
+	dibujar();
 }
